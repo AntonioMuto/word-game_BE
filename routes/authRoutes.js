@@ -1,5 +1,6 @@
 const express = require('express');
 const { signup, login } = require('../controllers/authController');  // Assicurati di avere il percorso giusto
+
 const router = express.Router();
 
 // Rotte di autenticazione

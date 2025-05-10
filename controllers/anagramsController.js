@@ -1,10 +1,10 @@
 const { getNextSequenceValue } = require('../utils/sequenceUtil');
-const CrossWord = require('../models/Crosswords');
+const Anagram = require('../models/Anagram');
 
-const fetchCrossword = async (req, res) => {
+const fetchAnagram = async (req, res) => {
     const levelId = req.params.id;
     try {
-        const levelData = await CrossWord.findOne({ id: levelId }).lean();
+        const levelData = await Anagram.findOne({ id: levelId }).lean();
         if (!levelData) {
             return res.status(400).json({ error: 'Level not found' });
         }
@@ -17,11 +17,11 @@ const fetchCrossword = async (req, res) => {
 
 const saveNewLevel = async (req, res) => {
     try {
-        const nextId = await getNextSequenceValue('crossWordId');
-        const newLevel = new CrossWord({ 
+        const nextId = await getNextSequenceValue('anagramId');
+        const newLevel = new Anagram({ 
             id: nextId,
-            sizeMapX: req.body.sizeMapX,
-            sizeMapY: req.body.sizeMapY,
+            anagramList: req.body.anagramList,
+            correctWords: req.body.correctWords,
             map: req.body.map
         });
         await newLevel.save();
@@ -32,4 +32,4 @@ const saveNewLevel = async (req, res) => {
     }
 };
 
-module.exports = { fetchCrossword, saveNewLevel};
+module.exports = { fetchAnagram, saveNewLevel};

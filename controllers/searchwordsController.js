@@ -1,10 +1,10 @@
 const { getNextSequenceValue } = require('../utils/sequenceUtil');
-const CrossWord = require('../models/Crosswords');
+const SearchWords = require('../models/SearchWords');
 
-const fetchCrossword = async (req, res) => {
+const fetchSearchWord = async (req, res) => {
     const levelId = req.params.id;
     try {
-        const levelData = await CrossWord.findOne({ id: levelId }).lean();
+        const levelData = await SearchWords.findOne({ id: levelId }).lean();
         if (!levelData) {
             return res.status(400).json({ error: 'Level not found' });
         }
@@ -17,12 +17,11 @@ const fetchCrossword = async (req, res) => {
 
 const saveNewLevel = async (req, res) => {
     try {
-        const nextId = await getNextSequenceValue('crossWordId');
-        const newLevel = new CrossWord({ 
+        const nextId = await getNextSequenceValue('searchWordId');
+        const newLevel = new SearchWords({ 
             id: nextId,
-            sizeMapX: req.body.sizeMapX,
-            sizeMapY: req.body.sizeMapY,
-            map: req.body.map
+            solution: req.body.solution,
+            initialData: req.body.initialData
         });
         await newLevel.save();
         res.status(201).json({ message: 'Level saved successfully' });
@@ -32,4 +31,4 @@ const saveNewLevel = async (req, res) => {
     }
 };
 
-module.exports = { fetchCrossword, saveNewLevel};
+module.exports = { fetchSearchWord, saveNewLevel};

@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const authenticateToken = require('../middlewares/auth');
-const { fetchCrossword, saveNewLevel } = require('../controllers/crosswordsController');
+const { fetchFindWord, saveNewLevel } = require('../controllers/findwordsController');
 
-router.get('/level/:id', authenticateToken, fetchCrossword);
+router.get('/level/:id', authenticateToken, fetchFindWord);
 router.post('/save-new-level', authenticateToken, saveNewLevel);
 // router.post('/complete-level/:id');
 

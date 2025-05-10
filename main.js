@@ -11,6 +11,10 @@ const app = express();
 const authRoutes = require('./routes/authRoutes');  
 const testRoutes = require('./routes/testRoutes');
 const crosswordsRoutes = require('./routes/crosswordsRoutes');
+const anagramsRoutes = require('./routes/anagramsRoutes');
+const findwordsRoutes = require('./routes/findwordsRoutes');
+const sudokusRoutes = require('./routes/sudokusRoutes');
+const searchwordsRoutes = require('./routes/searchwordsRoutes');
 
 app.use(httpContext.middleware);
 app.use(assignId);
@@ -22,6 +26,10 @@ connectDB();
 app.use('/auth', authRoutes);
 app.use('/test', testRoutes);
 app.use('/crosswords', crosswordsRoutes);
+app.use('/anagrams', anagramsRoutes);
+app.use('/findwords', findwordsRoutes);
+app.use('/sudokus', sudokusRoutes);
+app.use('/searchwords', searchwordsRoutes);
 
 
 app.get('/', (req, res) => {
