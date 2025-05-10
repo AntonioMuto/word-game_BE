@@ -10,6 +10,7 @@ const path = require('path');
 const app = express();
 const authRoutes = require('./routes/authRoutes');  
 const testRoutes = require('./routes/testRoutes');
+const crosswordsRoutes = require('./routes/crosswordsRoutes');
 
 app.use(httpContext.middleware);
 app.use(assignId);
@@ -20,6 +21,7 @@ connectDB();
 //ROUTES
 app.use('/auth', authRoutes);
 app.use('/test', testRoutes);
+app.use('/crosswords', crosswordsRoutes);
 
 
 app.get('/', (req, res) => {
