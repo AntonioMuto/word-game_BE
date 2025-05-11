@@ -15,6 +15,7 @@ const anagramsRoutes = require('./routes/anagramsRoutes');
 const findwordsRoutes = require('./routes/findwordsRoutes');
 const sudokusRoutes = require('./routes/sudokusRoutes');
 const searchwordsRoutes = require('./routes/searchwordsRoutes');
+const levelsRoutes = require('./routes/levelsRoutes');
 
 app.use(httpContext.middleware);
 app.use(assignId);
@@ -30,6 +31,7 @@ app.use('/anagrams', anagramsRoutes);
 app.use('/findwords', findwordsRoutes);
 app.use('/sudokus', sudokusRoutes);
 app.use('/searchwords', searchwordsRoutes);
+app.use('/levels', levelsRoutes);
 
 
 app.get('/', (req, res) => {
