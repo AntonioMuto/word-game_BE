@@ -3,17 +3,16 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const completeLevel = async (req, res) => {
-    const { idGame } = req.params;
-    const { username } = req.body;
+    const { idGame, userId } = req.params;
 
     try {
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ id: userId });
         if (!user) {
             return res.status(400).json({ error: 'User not found' });
         }
 
         const updatedUser = await User.findOneAndUpdate(
-            { username },
+            { id: userId },
             { $inc: { [`level${idGame}`]: 1 } },
             { new: true }
         ).lean();
