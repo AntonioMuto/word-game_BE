@@ -60,7 +60,7 @@ const login = async (req, res) => {
         if (!user) {
             return res.status(400).json({ 
                 success: false,
-                userAlredyTaken: true,
+                userNotFound: true,
                 error: 'User not found' 
             });
         }
