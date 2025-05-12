@@ -8,7 +8,10 @@ const completeLevel = async (req, res) => {
     try {
         const user = await User.findOne({ id: userId });
         if (!user) {
-            return res.status(400).json({ error: 'User not found' });
+            return res.status(404).json({
+                 userAlredyTaken: true,
+                 message: 'User not found'
+            });
         }
 
         const updatedUser = await User.findOneAndUpdate(

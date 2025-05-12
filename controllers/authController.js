@@ -14,10 +14,18 @@ const signup = async (req, res) => {
         const existingUser = await User.findOne({ username });
         const existingEmail = await User.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({ error: 'Username already taken' });
+            return res.status(400).json({ 
+                success: false,
+                userAlredyTaken: true,
+                error: 'Username already taken' 
+            });
         }
         if(existingEmail) {
-            return res.status(400).json({ error: 'Email already taken' });
+            return res.status(400).json({ 
+                success: false,
+                emailAlredyTaken: true,
+                error: 'Email already taken' 
+            });
         }
 
         const nextId = await getNextSequenceValue('userId');
@@ -30,10 +38,16 @@ const signup = async (req, res) => {
         });
 
         await newUser.save();
-        res.status(201).json({ message: 'User registered successfully' });
+        res.status(201).json({ 
+            success: true,
+            message: 'User registered successfully' 
+        });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: err });
+        res.status(500).json({ 
+            success: false,
+            error: err 
+        });
     }
 };
 
@@ -44,18 +58,29 @@ const login = async (req, res) => {
     try {
         const user = await User.findOne({ username });
         if (!user) {
-            return res.status(400).json({ error: 'User not found' });
+            return res.status(400).json({ 
+                success: false,
+                userAlredyTaken: true,
+                error: 'User not found' 
+            });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(401).json({ error: 'Invalid password' });
+            return res.status(401).json({ 
+                success: false,
+                wrongPassword: true,
+                error: 'Invalid password' 
+            });
         }
 
         const accessToken = jwt.sign({ username: user.username, id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.json({ accessToken, username, coins: user.coins });
     } catch (err) {
-        res.status(500).json({ error: 'Something went wrong' });
+        res.status(500).json({ 
+            success: false,
+            error: 'Something went wrong' 
+        });
     }
 };
 
