@@ -61,7 +61,7 @@ const login = async (req, res) => {
             return res.status(400).json({ 
                 success: false,
                 userNotFound: true,
-                error: 'User not found' 
+                error: 'Username non trovato' 
             });
         }
 
@@ -70,7 +70,7 @@ const login = async (req, res) => {
             return res.status(401).json({ 
                 success: false,
                 wrongPassword: true,
-                error: 'Invalid password' 
+                error: 'Password errata' 
             });
         }
 

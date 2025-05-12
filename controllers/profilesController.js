@@ -8,7 +8,7 @@ const addCoins = async (req, res) => {
     try {
         const user = await User.findOne({ id: userId });
         if (!user) {
-            return res.status(400).json({ error: 'User not found' });
+            return res.status(400).json({ error: 'Username non trovato' });
         }
 
         const updatedUser = await User.findOneAndUpdate(
@@ -31,7 +31,7 @@ const subtractCoins = async (req, res) => {
     try {
         const user = await User.findOne({ id: userId });
         if (!user) {
-            return res.status(400).json({ error: 'User not found' });
+            return res.status(400).json({ error: 'Username non trovato' });
         }
 
         const updatedUser = await User.findOneAndUpdate(

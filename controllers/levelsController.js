@@ -10,7 +10,7 @@ const completeLevel = async (req, res) => {
         if (!user) {
             return res.status(404).json({
                  userAlredyTaken: true,
-                 message: 'User not found'
+                 message: 'Username non trovato'
             });
         }
 
