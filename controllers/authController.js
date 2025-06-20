@@ -75,7 +75,7 @@ const login = async (req, res) => {
         }
 
         const accessToken = jwt.sign({ username: user.username, id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ accessToken, username, coins: user.coins });
+        res.json({ accessToken, username, coins: user.coins, userId: user.id  });
     } catch (err) {
         res.status(500).json({ 
             success: false,
