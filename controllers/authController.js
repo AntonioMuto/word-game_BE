@@ -14,17 +14,17 @@ const signup = async (req, res) => {
         const existingUser = await User.findOne({ username });
         const existingEmail = await User.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({ 
+            return res.status(400).json({
                 success: false,
                 userAlredyTaken: true,
-                error: 'Username already taken' 
+                error: 'Username already taken'
             });
         }
-        if(existingEmail) {
-            return res.status(400).json({ 
+        if (existingEmail) {
+            return res.status(400).json({
                 success: false,
                 emailAlredyTaken: true,
-                error: 'Email already taken' 
+                error: 'Email already taken'
             });
         }
 
@@ -38,15 +38,15 @@ const signup = async (req, res) => {
         });
 
         await newUser.save();
-        res.status(201).json({ 
+        res.status(201).json({
             success: true,
-            message: 'User registered successfully' 
+            message: 'User registered successfully'
         });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ 
+        res.status(500).json({
             success: false,
-            error: err 
+            error: err
         });
     }
 };
@@ -58,28 +58,38 @@ const login = async (req, res) => {
     try {
         const user = await User.findOne({ username });
         if (!user) {
-            return res.status(400).json({ 
+            return res.status(400).json({
                 success: false,
                 userNotFound: true,
-                error: 'Username non trovato' 
+                error: 'Username non trovato'
             });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(401).json({ 
+            return res.status(401).json({
                 success: false,
                 wrongPassword: true,
-                error: 'Password errata' 
+                error: 'Password errata'
             });
         }
 
         const accessToken = jwt.sign({ username: user.username, id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ accessToken, username, coins: user.coins, userId: user.id  });
+        res.json({ 
+            accessToken, 
+            username, 
+            coins: user.coins, 
+            userId: user.id, 
+            levelCrossWord: user.levelCrossWord,
+            levelAnagram: user.levelAnagram,
+            levelFindWord: user.levelFindWord, 
+            levelSearchWord: user.levelSearchWord, 
+            levelSudoku: user.levelSudoku 
+        });
     } catch (err) {
-        res.status(500).json({ 
+        res.status(500).json({
             success: false,
-            error: 'Something went wrong' 
+            error: 'Something went wrong'
         });
     }
 };
